@@ -5,19 +5,23 @@ import PackageDescription
 
 let package = Package(
     name: "MiniCrossword",
+    platforms: [
+        .iOS(.v13)
+    ],
     products: [
-        // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "MiniCrossword",
             targets: ["MiniCrossword"]),
     ],
     targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "MiniCrossword"),
+            name: "MiniCrossword",
+            dependencies: []
+        ),
         .testTarget(
             name: "MiniCrosswordTests",
-            dependencies: ["MiniCrossword"]),
-    ]
+            dependencies: ["MiniCrossword"]
+        ),
+    ],
+    swiftLanguageVersions: [.v5]
 )
