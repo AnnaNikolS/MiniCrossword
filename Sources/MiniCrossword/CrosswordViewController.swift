@@ -64,13 +64,20 @@ public class CrosswordViewController: UIViewController, UICollectionViewDelegate
     }
 
     private func setupQuestions() {
-        var yOffset: CGFloat = 40
+        var yOffset: CGFloat = 0
         for question in crosswordData.questions {
-            let questionLabel = UILabel(frame: CGRect(x: 24, y: yOffset, width: view.bounds.width - 32, height: 20))
+            let questionLabel = UILabel(
+                frame: CGRect(
+                    x: 24,
+                    y: (view.bounds.height - view.bounds.height / 5) - 48 + yOffset,
+                    width: view.bounds.width - 32,
+                    height: 20
+                )
+            )
             questionLabel.text = question
             questionLabel.textAlignment = .left
             view.addSubview(questionLabel)
-            yOffset += 30
+            yOffset += 24
         }
     }
 
