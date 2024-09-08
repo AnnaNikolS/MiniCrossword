@@ -13,7 +13,7 @@ public struct CrosswordData {
     public let intersectionLetters: [CGPoint: String] // Пересекающиеся буквы и их координаты
     public let questions: [String] // Список вопросов
     public let cellColor: UIColor // Цвет ячеек для слов
-    
+
     public init(verticalWords: [[String]], horizontalWords: [[String]], intersectionLetters: [CGPoint: String], questions: [String], cellColor: UIColor) {
         self.verticalWords = verticalWords
         self.horizontalWords = horizontalWords
@@ -29,4 +29,5 @@ extension CGPoint: Hashable {
         hasher.combine(y)
     }
 }
+
 

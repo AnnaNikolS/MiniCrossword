@@ -7,8 +7,6 @@
 
 import UIKit
 
-import UIKit
-
 public class CrosswordViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
     private let crosswordData: CrosswordData
@@ -23,7 +21,7 @@ public class CrosswordViewController: UIViewController, UICollectionViewDelegate
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override public func viewDidLoad() {
         super.viewDidLoad()
         
@@ -34,14 +32,14 @@ public class CrosswordViewController: UIViewController, UICollectionViewDelegate
         setupCheckButton()
         setupQuestions()
     }
-    
+
     // Заполнение пересекающихся букв
     private func prefillCrossword() {
         for (point, letter) in crosswordData.intersectionLetters {
             userAnswers[Int(point.y)][Int(point.x)] = letter
         }
     }
-    
+
     private func setupCollectionView() {
         let layout = UICollectionViewFlowLayout()
         layout.minimumInteritemSpacing = 4
@@ -53,7 +51,7 @@ public class CrosswordViewController: UIViewController, UICollectionViewDelegate
         collectionView.backgroundColor = .clear
         view.addSubview(collectionView)
     }
-    
+
     private func setupCheckButton() {
         let checkButton = UIButton(type: .system)
         checkButton.setTitle("Проверить", for: .normal)
@@ -64,7 +62,7 @@ public class CrosswordViewController: UIViewController, UICollectionViewDelegate
         checkButton.layer.cornerRadius = 10
         view.addSubview(checkButton)
     }
-    
+
     private func setupQuestions() {
         var yOffset: CGFloat = 40
         for question in crosswordData.questions {
@@ -75,31 +73,31 @@ public class CrosswordViewController: UIViewController, UICollectionViewDelegate
             yOffset += 30
         }
     }
-    
+
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 7 * 7
     }
-    
+
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CrosswordCell", for: indexPath) as! CrosswordCell
-        
+
         let row = indexPath.item / 7
         let col = indexPath.item % 7
-        
+
         let isPartOfWord = crosswordData.verticalWords.contains(where: { $0.indices.contains(row) && $0[row] == userAnswers[row][col] }) ||
                            crosswordData.horizontalWords.contains(where: { $0.indices.contains(col) && $0[col] == userAnswers[row][col] })
-        
+
         cell.setLetter(userAnswers[row][col])
         cell.configureForCrossword(isPartOfWord: isPartOfWord, color: crosswordData.cellColor)
-        
+
         return cell
     }
-    
+
     // Ввод буквы при выборе ячейки
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let row = indexPath.item / 7
         let col = indexPath.item % 7
-        
+
         let alert = UIAlertController(title: "Введите букву", message: nil, preferredStyle: .alert)
         alert.addTextField { textField in
             textField.placeholder = "Буква"
@@ -113,7 +111,7 @@ public class CrosswordViewController: UIViewController, UICollectionViewDelegate
         alert.addAction(confirmAction)
         present(alert, animated: true, completion: nil)
     }
-    
+
     // Проверка кроссворда
     @objc private func checkCrossword() {
         var isCorrect = true
@@ -140,7 +138,7 @@ public class CrosswordViewController: UIViewController, UICollectionViewDelegate
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         present(alert, animated: true, completion: nil)
     }
-    
+
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let totalSpacing: CGFloat = 4 * 6
         let size = (collectionView.frame.width - totalSpacing) / 7
