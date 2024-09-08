@@ -27,7 +27,7 @@ Mini-Crossword — это простая библиотека для созда�
    import UIKit
    import MiniCrossword
 
-class ViewController: UIViewController {
+   class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,6 +74,6 @@ class ViewController: UIViewController {
         view.addSubview(crosswordViewController.view)
         crosswordViewController.didMove(toParent: self)
     }
-}
+   }
 
 
